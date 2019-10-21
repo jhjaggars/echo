@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"flag"
@@ -14,6 +14,7 @@ import (
 var addr = flag.String("addr", "localhost:8080", "http service address")
 
 func main() {
+	flag.Parse()
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
