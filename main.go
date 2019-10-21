@@ -31,6 +31,6 @@ func echo(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/echo", echo)
+	http.HandleFunc("/wss/echo", echo)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
