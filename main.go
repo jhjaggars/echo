@@ -1,9 +1,12 @@
 package main
 
 import (
-	"github.com/gorilla/websocket"
 	"log"
 	"net/http"
+	"os"
+
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/websocket"
 )
 
 var upgrader = websocket.Upgrader{}
@@ -31,6 +34,8 @@ func echo(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/wss/echo", echo)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	r := http.NewServeMux()
+	r.HandleFunc("/wss/echo", echo)
+	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
+	log.Fatal(http.ListenAndServe(":8080", loggedRouter))
 }
